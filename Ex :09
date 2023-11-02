@@ -1,0 +1,108 @@
+//prg 01//
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class ThreeLetterWordCounter {
+    public static void main(String[] args) {
+        String filePath = "your_file.txt"; // Replace with the path to your text file
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line;
+            int count = 0;
+
+            while ((line = reader.readLine()) != null) {
+                String[] words = line.split("\\s+"); // Split the line into words
+
+                for (String word : words) {
+                    if (word.length() == 3) {
+                        count++;
+                    }
+                }
+            }
+
+            reader.close();
+            System.out.println("Number of three-letter words: " + count);
+        } catch (IOException e) {
+            System.err.println("An error occurred while reading the file.");
+            e.printStackTrace();
+        }
+    }
+}
+//prg 02//
+import java.io.File;
+
+public class FileInfo {
+    public static void main(String[] args) {
+        // Get the file name from the user
+        System.out.print("Enter the file name: ");
+        String fileName = System.console().readLine();
+
+        // Create a File object with the provided file name
+        File file = new File(fileName);
+
+        // Check if the file exists
+        if (file.exists()) {
+            System.out.println("File is available.");
+
+            // Check if the file is readable and/or writable
+            if (file.canRead() && file.canWrite()) {
+                System.out.println("File is both readable and writable.");
+            } else if (file.canRead()) {
+                System.out.println("File is readable but not writable.");
+            } else if (file.canWrite()) {
+                System.out.println("File is writable but not readable.");
+            } else {
+                System.out.println("File is neither readable nor writable.");
+            }
+
+            // Get the type of the file
+            if (fileName.lastIndexOf('.') != -1) {
+                String fileType = fileName.substring(fileName.lastIndexOf('.'));
+                System.out.println("File type: " + fileType);
+            } else {
+                System.out.println("File type: Unknown (No extension)");
+            }
+
+            // Get the length of the file in bytes
+            long fileLength = file.length();
+            System.out.println("File length (bytes): " + fileLength);
+        } else {
+            System.out.println("File does not exist.");
+        }
+    }
+}
+//prg 03//
+import java.io.*;
+
+public class BinaryFileReadWrite {
+    public static void main(String[] args) {
+        // Define the input and output file names
+        String inputFile = "input.bin";
+        String outputFile = "output.bin";
+
+        try {
+            // Reading a binary file using Byte Streams
+            FileInputStream inputStream = new FileInputStream(inputFile);
+            FileOutputStream outputStream = new FileOutputStream(outputFile);
+
+            int bytesRead;
+            byte[] buffer = new byte[1024];
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                // Writing the bytes to the output binary file
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            // Close the streams
+            inputStream.close();
+            outputStream.close();
+
+            System.out.println("Binary file copied successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
